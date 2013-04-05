@@ -195,7 +195,7 @@ set(SYSCONFIGDIR "${PREFIX}/etc/")
 #endif(NOT DEFINED SYSCONFIGDIR)
 
 install(FILES
-        LICENSE
+        LICENSE CHANGES
         DESTINATION ${PREFIX}/usr/share/doc/glite-wms-api-${PVER}/
 )
 

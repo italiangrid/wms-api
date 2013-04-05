@@ -7,8 +7,7 @@ Vendor: EMI
 URL: http://glite.cern.ch/
 Group: System Environment/Libraries
 BuildArch: %{_arch}
-BuildRequires: %{!?extbuilddir: gridsite-devel,} chrpath, cmake, openssl-devel, gsoap-devel
-BuildRequires: %{!?extbuilddir: emi-pkgconfig-compat, }
+BuildRequires: gridsite-devel, emi-pkgconfig-compat, chrpath, cmake, openssl-devel, gsoap-devel, voms-devel, gridsite-libs, gridsite
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 AutoReqProv: yes
 Source: %{name}-%{version}-%{release}.tar.gz
@@ -30,7 +29,7 @@ C/C++ libraries for the WM Proxy service
 
 %build
 if test "x%{extbuilddir}" == "x-" ; then
-  cmake -DPREFIX:string=%{buildroot}/usr -DPVER:string=%{version} .
+  cmake -DPREFIX:string=%{buildroot} -DPVER=%{version} -DOS=%{extdist} -DMOCKCFG=none -DAGE=%{extage} .
 fi
 
 %install
@@ -57,9 +56,9 @@ rm -rf %{buildroot}
 
 %files
 %defattr(-,root,root)
-%dir /usr/share/doc/glite-wms-wmproxy-api-cpp-%{version}/
-/usr/share/doc/glite-wms-wmproxy-api-cpp-%{version}/CHANGES
-/usr/share/doc/glite-wms-wmproxy-api-cpp-%{version}/LICENSE
+%dir /usr/share/doc/glite-wms-api-%{version}/
+/usr/share/doc/glite-wms-api-%{version}/CHANGES
+/usr/share/doc/glite-wms-api-%{version}/LICENSE
 /usr/lib64/libglite_wms_wmproxy_api_cpp.so.0
 /usr/lib64/libglite_wms_wmproxy_api_cpp.so.0.0.0
 
@@ -67,7 +66,7 @@ rm -rf %{buildroot}
 Summary: C/C++ libraries for the WM Proxy service (development files)
 Group: System Environment/Libraries
 Requires: %{name}%{?_isa} = %{version}-%{release}
-Requires: gridsite-devel, gsoap-devel, libxml2-devel, openssl-devel
+Requires: gridsite-devel, gsoap-devel, libxml2-devel, openssl-devel, voms-devel, gridsite-libs, gridsite
 AutoReqProv: no
 
 %description devel
@@ -90,13 +89,13 @@ Group: Documentation
 %description doc
 Documentation files for the WM Proxy service API
 
-%files doc
-%defattr(-,root,root)
-%dir %{_docdir}/%{name}/html
-%doc %{_docdir}/%{name}/html/*.html
-%doc %{_docdir}/%{name}/html/*.css
-%doc %{_docdir}/%{name}/html/*.png
-%doc %{_docdir}/%{name}/html/*.gif
+#%files doc
+#%defattr(-,root,root)
+#%dir %{_docdir}/%{name}/html
+#%doc %{_docdir}/%{name}/html/*.html
+#%doc %{_docdir}/%{name}/html/*.css
+#%doc %{_docdir}/%{name}/html/*.png
+#%doc %{_docdir}/%{name}/html/*.gif
 
 %changelog
 * %{extcdate} WMS group <wms-support@lists.infn.it> - %{extversion}-%{extage}.%{extdist}
