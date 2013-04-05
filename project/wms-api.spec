@@ -1,5 +1,5 @@
 Summary: C/C++ libraries for the WM Proxy service
-Name: glite-wms-wmproxy-api-cpp
+Name: glite-wms-api
 Version: %{extversion}
 Release: %{extage}.%{extdist}
 License: ASL 2.0
@@ -8,7 +8,7 @@ URL: http://glite.cern.ch/
 Group: System Environment/Libraries
 BuildArch: %{_arch}
 BuildRequires: %{!?extbuilddir: gridsite-devel,} chrpath, cmake, openssl-devel, gsoap-devel
-BuildRequires: %{!?extbuilddir: glite-build-common-cpp, emi-pkgconfig-compat, } doxygen, docbook-style-xsl, libxslt-devel, libxml2-devel, globus-gssapi-gsi-devel
+BuildRequires: %{!?extbuilddir: emi-pkgconfig-compat, }
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 AutoReqProv: yes
 Source: %{name}-%{version}-%{release}.tar.gz
@@ -43,8 +43,8 @@ if test "x%{extbuilddir}" == "x-" ; then
 else
   cp -R %{extbuilddir}/* %{buildroot}
 fi
-sed 's|^prefix=.*|prefix=/usr|g' %{buildroot}/usr/lib64/pkgconfig/wmproxy-api-cpp.pc > %{buildroot}/usr/lib64/pkgconfig/wmproxy-api-cpp.pc.new
-mv %{buildroot}/usr/lib64/pkgconfig/wmproxy-api-cpp.pc.new %{buildroot}/usr/lib64/pkgconfig/wmproxy-api-cpp.pc
+sed 's|^prefix=.*|prefix=/usr|g' %{buildroot}/usr/lib64/pkgconfig/wms-api.pc > %{buildroot}/usr/lib64/pkgconfig/wms-api.pc.new
+mv %{buildroot}/usr/lib64/pkgconfig/wms-api.pc.new %{buildroot}/usr/lib64/pkgconfig/wms-api.pc
 strip -s %{buildroot}/usr/lib64/libglite_wms_wmproxy_api_cpp.so.0.0.0
 chrpath --delete %{buildroot}/usr/lib64/libglite_wms_wmproxy_api_cpp.so.0.0.0
 
@@ -75,7 +75,7 @@ C/C++ libraries for the WM Proxy service (development files)
 
 %files devel
 %defattr(-,root,root)
-/usr/lib64/pkgconfig/wmproxy-api-cpp.pc
+/usr/lib64/pkgconfig/wms-api.pc
 /usr/lib64/libglite_wms_wmproxy_api_cpp.so
 %dir /usr/include/glite/
 %dir /usr/include/glite/wms/

@@ -1,14 +1,3 @@
-
-#add_custom_command(OUTPUT ${PROJECT_SOURCE_DIR}/src/wm.h
-#  DEPENDS /var/lib/delegation-interface/interface/www.gridsite.org-delegation-2.0.0.wsdl
-#  COMMAND wsdl2h -o ${PROJECT_SOURCE_DIR}/src/wm.h 
-#          -I/usr/include/gsoap 
-#          -t ${PROJECT_SOURCE_DIR}/src/wmptypemap.dat 
-#	  ${PROJECT_SOURCE_DIR}/src/WMProxy.wsdl
-#	  )
-
-
-
 add_custom_command(
   OUTPUT 
   ${PROJECT_SOURCE_DIR}/src/soapC.cpp 
@@ -57,6 +46,4 @@ target_link_libraries(glite_wms_wmproxy_api_cpp
 set_target_properties(glite_wms_wmproxy_api_cpp PROPERTIES VERSION 0.0.0 SOVERSION 0)
 
 install(TARGETS glite_wms_wmproxy_api_cpp
-  LIBRARY DESTINATION ${PREFIX}/${LIBDIR} )
-
-add_subdirectory(pkgconfig)
+  LIBRARY DESTINATION ${PREFIX}/usr/${LIBDIR} )
