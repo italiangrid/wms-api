@@ -7,7 +7,7 @@ Vendor: EMI
 URL: http://glite.cern.ch/
 Group: System Environment/Libraries
 BuildArch: %{_arch}
-BuildRequires: gridsite-devel, emi-pkgconfig-compat, chrpath, cmake, openssl-devel, gsoap-devel, voms-devel, gridsite-libs, gridsite
+BuildRequires: gridsite-devel, emi-pkgconfig-compat, chrpath, cmake, openssl-devel, gsoap-devel, voms-devel, gridsite-libs, gridsite, boost, boost-devel
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 AutoReqProv: yes
 Source: %{name}-%{version}-%{release}.tar.gz
@@ -66,7 +66,7 @@ rm -rf %{buildroot}
 Summary: C/C++ libraries for the WM Proxy service (development files)
 Group: System Environment/Libraries
 Requires: %{name}%{?_isa} = %{version}-%{release}
-Requires: gridsite-devel, gsoap-devel, libxml2-devel, openssl-devel, voms-devel, gridsite-libs, gridsite
+Requires: gridsite-devel, gsoap-devel, libxml2-devel, openssl-devel, voms-devel, gridsite-libs, gridsite, boost-devel, boost
 AutoReqProv: no
 
 %description devel
