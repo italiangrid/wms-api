@@ -194,6 +194,44 @@ install(FILES
         DESTINATION ${PREFIX}/usr/share/doc/glite-wms-api-${PVER}/
 )
 
+if(EXISTS "/etc/debian_version")
+  set(ONDEB "1")
+endif(EXISTS "/etc/debian_version")
+
+if(EXISTS "/etc/redhat-release")
+  set(ONRH "1")
+endif(EXISTS "/etc/redhat-release")
+
+if(DEFINED ONDEB)
+EXEC_PROGRAM(cat
+  ARGS /etc/debian_version | /usr/bin/awk -F"." '{print $1}'
+  OUTPUT_VARIABLE DEB_VER)
+endif(DEFINED ONDEB)
+
+if(DEFINED ONRH)
+EXEC_PROGRAM(cat
+  ARGS  /etc/redhat-release | /usr/bin/awk '{print $(NF-1)}' | /usr/bin/awk
+-F"." '{print $1}'
+  OUTPUT_VARIABLE RH_VER)
+endif(DEFINED ONRH)
+
+if(DEFINED ONDEB)
+  EXEC_PROGRAM(/usr/bin/dpkg 
+    ARGS -s gsoap|grep Version|/usr/bin/awk '{print $2}'
+    OUTPUT_VARIABLE GSOAP_VERSION)
+endif(DEFINED ONDEB)
+
+if(DEFINED ONRH)
+    if("${RH_VER}" STREQUAL "5")
+    add_definitions( -DGSOAP_VERSION_NUM=20713 )
+  endif("${RH_VER}" STREQUAL "5")
+
+  if("${RH_VER}" STREQUAL "6")
+    add_definitions( -DGSOAP_VERSION_NUM=20716 )
+  endif("${RH_VER}" STREQUAL "6")
+endif(DEFINED ONRH)
+
+
 add_subdirectory(wmproxy-api-cpp)
 add_subdirectory(pkgconfig)
 if(RERUN)
