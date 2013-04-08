@@ -83,17 +83,18 @@ fixing/g' < project/wms-api.spec > rpmbuild/SPECS/wms-api.spec
 "extbuilddir ${PREFIX}" `pwd`/rpmbuild/SPECS/wms-api.spec
   )
   
-  ADD_CUSTOM_COMMAND(TARGET distclean
-    COMMAND make ARGS clean
-    COMMAND find ARGS ${FASTLIB_SOURCE_DIR} -iname CMakeCache.txt
+ADD_CUSTOM_COMMAND(TARGET distclean
+  COMMAND rm -rf wmproxy-api-cpp/src/autogen
+  COMMAND make ARGS clean
+  COMMAND find ARGS ${FASTLIB_SOURCE_DIR} -iname CMakeCache.txt
 -delete
-    COMMAND find ARGS ${FASTLIB_SOURCE_DIR} -iname cmake_install.cmake
+  COMMAND find ARGS ${FASTLIB_SOURCE_DIR} -iname cmake_install.cmake
 -delete
-    COMMAND find ARGS ${FASTLIB_SOURCE_DIR} -iname Makefile -delete
-    COMMAND find ARGS ${FASTLIB_SOURCE_DIR} -depth -type d -iname
+  COMMAND find ARGS ${FASTLIB_SOURCE_DIR} -iname Makefile -delete
+  COMMAND find ARGS ${FASTLIB_SOURCE_DIR} -depth -type d -iname
 CMakeFiles -exec rm -rf {} \;
-    COMMAND rm ARGS -rf ${PREFIX}/stage install_manifest.txt
-    COMMAND rm ARGS ./pkgconfig/wms-api.pc
+  COMMAND rm ARGS -rf ${PREFIX}/stage install_manifest.txt
+  COMMAND rm ARGS ./pkgconfig/wms-api.pc
     VERBATIM )
 ENDIF(UNIX)
 

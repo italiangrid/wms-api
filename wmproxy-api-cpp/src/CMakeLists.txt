@@ -1,24 +1,28 @@
 add_custom_command(
   OUTPUT 
-  ${PROJECT_SOURCE_DIR}/src/soapC.cpp 
-  ${PROJECT_SOURCE_DIR}/src/soapClient.cpp
+  ${PROJECT_SOURCE_DIR}/src/autogen/soapC.cpp 
+  ${PROJECT_SOURCE_DIR}/src/autogen/soapClient.cpp
+  COMMAND mkdir -p ${PROJECT_SOURCE_DIR}/src/autogen
   COMMAND
-  wsdl2h -o ${PROJECT_SOURCE_DIR}/src/wm.h 
+  wsdl2h -o ${PROJECT_SOURCE_DIR}/src/autogen/wm.h 
          -t ${PROJECT_SOURCE_DIR}/src/wmptypemap.dat 
          ${PROJECT_SOURCE_DIR}/src/WMProxy.wsdl
   COMMAND 
-  soapcpp2 -I/usr/include:/usr/import:/usr/share/gsoap/import:/usr/include/gsoap ${PROJECT_SOURCE_DIR}/src/wm.h
+  soapcpp2 -d${PROJECT_SOURCE_DIR}/src/autogen
+-I/usr/include:/usr/import:/usr/share/gsoap/import:/usr/include/gsoap
+${PROJECT_SOURCE_DIR}/src/autogen/wm.h
   )
 
 
 add_custom_target(GENSTUBS ALL DEPENDS 
-  ${PROJECT_SOURCE_DIR}/src/soapC.cpp 
-  ${PROJECT_SOURCE_DIR}/src/soapClient.cpp
+  ${PROJECT_SOURCE_DIR}/src/autogen/soapC.cpp 
+  ${PROJECT_SOURCE_DIR}/src/autogen/soapClient.cpp
   )
 
 
 
 include_directories(${CLASSAD_INCLUDE_DIRS}
+                    ${PROJECT_SOURCE_DIR}/src/autogen
                     ${PROJECT_SOURCE_DIR}/interface
 		    ${PROJECT_SOURCE_DIR}/src)
 
@@ -33,8 +37,8 @@ include_directories(${CLASSAD_INCLUDE_DIRS}
 #  dom_${GSOAP_VERSION}.cpp )
 
 add_library(glite_wms_wmproxy_api_cpp SHARED 
-  soapC.cpp
-  soapClient.cpp 
+  autogen/soapC.cpp
+  autogen/soapClient.cpp 
   wmproxy_api.cpp 
   wmproxy_api_utilities.cpp 
   dom_${GSOAP_VERSION}.cpp )
