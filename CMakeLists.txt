@@ -93,13 +93,7 @@ fixing/g' < project/wms-api.spec > rpmbuild/SPECS/wms-api.spec
     COMMAND find ARGS ${FASTLIB_SOURCE_DIR} -depth -type d -iname
 CMakeFiles -exec rm -rf {} \;
     COMMAND rm ARGS -rf ${PREFIX}/stage install_manifest.txt
-    COMMAND rm ARGS ./configuration/config/glite-wms-check-daemons.sh
-    ./configuration/config/glite-wms-parse-configuration.sh 
-    ./ice/config/glite-wms-ice
-    ./jobsubmission/config/glite-wms-clean-lm-recycle.sh 
-    ./jobsubmission/config/glite-wms-jc 
-    ./jobsubmission/config/glite-wms-lm
-    ./pkgconfig/wms-server.pc
+    COMMAND rm ARGS ./pkgconfig/wms-api.pc
     VERBATIM )
 ENDIF(UNIX)
 
